@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
 
-function App() {
+export default function App() {
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    fetch('https://fine-pink-sea-lion-cape.cyclic.app/attractions')
+      .then(res => res.json())
+      .then((result) => {
+        console.log(result)
+        setItems(result)
+      })
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>
+            {item.product_name}<br />
+            {item.description} 
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  )
 }
 
-export default App;
+
+// npx createe-react-app travel-front
